@@ -188,8 +188,6 @@ var templateCard = document.querySelector('.hotel-result-card');
 
 container.innerHTML = '';
 
-var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
-
 hotelData.forEach(function(hotel, index) {
 var cardClone = templateCard.cloneNode(true);
 
