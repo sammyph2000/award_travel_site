@@ -48,15 +48,15 @@ document.getElementById('no_guests').value = noGuests;
 }
 }
 
-function updateDateRangePicker(checkIn, checkOut) {
-var startDate = moment(checkIn, "MM/DD/YYYY");
-var endDate = moment(checkOut, "MM/DD/YYYY");
+// function updateDateRangePicker(checkIn, checkOut) {
+// var startDate = moment(checkIn, "MM/DD/YYYY");
+// var endDate = moment(checkOut, "MM/DD/YYYY");
 
-$('input[ms-code-input="date-range"]').daterangepicker({
-startDate: startDate,
-endDate: endDate,
-});
-}
+// $('input[ms-code-input="date-range"]').daterangepicker({
+// startDate: startDate,
+// endDate: endDate,
+// });
+// }
 
 function constructApiUrl(destination, checkIn, checkOut, noGuests) {
 return `https://api.awardtravel.co/search_hotels?destination=${encodeURIComponent(destination)}&check_in_date=${encodeURIComponent(checkIn)}&check_out_date=${encodeURIComponent(checkOut)}&no_guests=${encodeURIComponent(noGuests)}`;}
