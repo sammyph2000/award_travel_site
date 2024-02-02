@@ -1,4 +1,5 @@
 <script>
+console.log("Script Loaded!")
 var signInSection = document.querySelector('.please-sign-in');
 var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
 document.addEventListener('DOMContentLoaded', function() {
