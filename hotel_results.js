@@ -1,51 +1,54 @@
 var signInSection = document.querySelector('.please-sign-in');
 var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
 console.log("UserStatus:", isUserSignedIn)
+
 document.addEventListener('DOMContentLoaded', function() {
-signInSection.style.setProperty('display', 'none', 'important');
-var currentURL = encodeURIComponent(window.location.href);
-var signUpButton = document.getElementById('hotel-ltd-sign-up');
-if (signUpButton) {signUpButton.href = `/signup?ref=hotels_search&redirect=${currentURL}`;}
-var signInButton = document.getElementById('sign-in-button');
-if (signInButton) {signInButton.href = `/login?redirect=${currentURL}`;}
+    signInSection.style.setProperty('display', 'none', 'important');
+    var currentURL = encodeURIComponent(window.location.href);
+    var signUpButton = document.getElementById('hotel-ltd-sign-up');
+    if (signUpButton) {signUpButton.href = `/signup?ref=hotels_search&redirect=${currentURL}`;}
+    var signInButton = document.getElementById('sign-in-button');
+    if (signInButton) {signInButton.href = `/login?redirect=${currentURL}`;}
 
-var hotelData = [];
-var destination = getQueryParam('destination');
-var checkIn = getQueryParam('check_in');
-var checkOut = getQueryParam('check_out');
-var noGuests = getQueryParam('no_guests');
-initializeParameters(destination, checkIn, checkOut, noGuests);
-var apiUrl = constructApiUrl(destination, checkIn, checkOut, noGuests);
-fetchHotelDataWithRetry(apiUrl, 5);
+    var hotelData = [];
+    var destination = getQueryParam('destination');
+    var checkIn = getQueryParam('check_in');
+    var checkOut = getQueryParam('check_out');
+    var noGuests = getQueryParam('no_guests');
+    initializeParameters(destination, checkIn, checkOut, noGuests);
+    var apiUrl = constructApiUrl(destination, checkIn, checkOut, noGuests);
+    fetchHotelDataWithRetry(apiUrl, 5);
 
-updateDateRangePicker(checkIn, checkOut);
+    updateDateRangePicker(checkIn, checkOut);
 
-document.getElementById('filter-button').addEventListener('click', function() {
-applyFilters();
+    document.getElementById('filter-button').addEventListener('click', function() {
+    applyFilters();
 
-if (!isUserSignedIn && hotelData.length > 5) {
-signInSection.style.display = 'hidden';
-var container = document.getElementById('results-container');
-container.insertBefore(signInSection, container.children[5]);
-signInSection.style.display = 'flex';}});
+    if (!isUserSignedIn && hotelData.length > 5) {
+    signInSection.style.display = 'hidden';
+    var container = document.getElementById('results-container');
+    container.insertBefore(signInSection, container.children[5]);
+    signInSection.style.display = 'flex';}});
 
-function getQueryParam(param) {
-var urlParams = new URLSearchParams(window.location.search);
-return urlParams.get(param);
-}
+    function getQueryParam(param) {
+        var urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
-function initializeParameters(destination, checkIn, checkOut, noGuests) {
-if (document.getElementById('destination')) {
-document.getElementById('destination').value = destination;
-}
-if (document.querySelector('.check-in')) {
-document.querySelector('.check-in').value = checkIn;}
-if (document.querySelector('.check-out')) {
-document.querySelector('.check-out').value = checkOut;}
+    function initializeParameters(destination, checkIn, checkOut, noGuests) {
+        if (document.getElementById('destination')) {
+        document.getElementById('destination').value = destination;
+        }
 
-if (document.getElementById('no_guests')) {
-document.getElementById('no_guests').value = noGuests;
-}
+        if (document.querySelector('.check-in')) {
+        document.querySelector('.check-in').value = checkIn;}
+
+        if (document.querySelector('.check-out')) {
+        document.querySelector('.check-out').value = checkOut;}
+
+        if (document.getElementById('no_guests')) {
+        document.getElementById('no_guests').value = noGuests;
+    }
 }
 
 // function updateDateRangePicker(checkIn, checkOut) {
