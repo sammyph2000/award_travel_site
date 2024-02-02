@@ -1,5 +1,6 @@
 var signInSection = document.querySelector('.please-sign-in');
 var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
+console.log("UserStatus:", isUserSignedIn)
 document.addEventListener('DOMContentLoaded', function() {
 signInSection.style.setProperty('display', 'none', 'important');
 var currentURL = encodeURIComponent(window.location.href);
