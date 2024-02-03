@@ -1,7 +1,8 @@
+var signInSection = document.querySelector('.please-sign-in');
+var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
+console.log("UserStatus:", isUserSignedIn)
+
 document.addEventListener('DOMContentLoaded', function() {
-    var signInSection = document.querySelector('.please-sign-in');
-    var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
-    console.log("UserStatus:", isUserSignedIn)
     signInSection.style.setProperty('display', 'none', 'important');
     var currentURL = encodeURIComponent(window.location.href);
     var signUpButton = document.getElementById('hotel-ltd-sign-up');
@@ -17,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeParameters(destination, checkIn, checkOut, noGuests);
     var apiUrl = constructApiUrl(destination, checkIn, checkOut, noGuests);
     fetchHotelDataWithRetry(apiUrl, 5);
-
-    updateDateRangePicker(checkIn, checkOut);
 
     document.getElementById('filter-button').addEventListener('click', function() {
     applyFilters();
@@ -49,16 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('no_guests').value = noGuests;
     }
 }
-
-// function updateDateRangePicker(checkIn, checkOut) {
-// var startDate = moment(checkIn, "MM/DD/YYYY");
-// var endDate = moment(checkOut, "MM/DD/YYYY");
-
-// $('input[ms-code-input="date-range"]').daterangepicker({
-// startDate: startDate,
-// endDate: endDate,
-// });
-// }
 
 function constructApiUrl(destination, checkIn, checkOut, noGuests) {
     return `https://api.awardtravel.co/search_hotels?destination=${encodeURIComponent(destination)}&check_in_date=${encodeURIComponent(checkIn)}&check_out_date=${encodeURIComponent(checkOut)}&no_guests=${encodeURIComponent(noGuests)}`;
