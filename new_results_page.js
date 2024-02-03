@@ -67,115 +67,115 @@ function fetchHotelDataWithRetry(apiUrl, retries) {
 }
 
 function fetchHotelData(apiUrl) {
-return new Promise((resolve, reject) => {
-var token = localStorage.getItem('awardTravelToken');
-var headers = {};
-if (token) {
-headers['Authorization'] = token;}
-fetch(apiUrl, {
-headers: headers})
-.then(response => {
-if (response.ok) {
-return response.json();
-} else {
-throw new Error('API response not 200');}})
-.then(data => {
-hotelData = data;
-console.log('API Response:', data);
-createHotelCards(hotelData);
-hidePreLoader();
-resolve(data);})
-.catch(error => {
-console.error('Error fetching data:', error);
-reject(error);});});}
-function hidePreLoader() {
-var preLoader = document.getElementById('pre-loader');
-if (preLoader) {
-preLoader.style.display = 'none';}}
+    return new Promise((resolve, reject) => {
+    var token = localStorage.getItem('awardTravelToken');
+    var headers = {};
+    if (token) {
+    headers['Authorization'] = token;}
+    fetch(apiUrl, {
+    headers: headers})
+    .then(response => {
+    if (response.ok) {
+    return response.json();
+    } else {
+    throw new Error('API response not 200');}})
+    .then(data => {
+    hotelData = data;
+    console.log('API Response:', data);
+    createHotelCards(hotelData);
+    hidePreLoader();
+    resolve(data);})
+    .catch(error => {
+    console.error('Error fetching data:', error);
+    reject(error);});});}
+    function hidePreLoader() {
+    var preLoader = document.getElementById('pre-loader');
+    if (preLoader) {
+    preLoader.style.display = 'none';}}
 
-function applyFilters() {
-var brandFilters = {
-marriott: document.getElementById('marriott').checked,
-hyatt: document.getElementById('hyatt').checked,
-hilton: document.getElementById('hilton').checked,
-ihg: document.getElementById('ihg').checked
-};
+    function applyFilters() {
+        var brandFilters = {
+        marriott: document.getElementById('marriott').checked,
+        hyatt: document.getElementById('hyatt').checked,
+        hilton: document.getElementById('hilton').checked,
+        ihg: document.getElementById('ihg').checked
+    };
 
-var specialFilters = {
-amex_mr: document.getElementById('amex-mr').checked,
-chase_ur: document.getElementById('chase-ur').checked,
-bilt: document.getElementById('bilt').checked
-};
+    var specialFilters = {
+        amex_mr: document.getElementById('amex-mr').checked,
+        chase_ur: document.getElementById('chase-ur').checked,
+        bilt: document.getElementById('bilt').checked
+        };
 
-var pointFilters = {
-marriott_35k: document.getElementById('marriott-35k').checked,
-marriott_50k: document.getElementById('marriott-50k').checked,
-marriott_85k: document.getElementById('marriott-85k').checked,
-woh1_4: document.getElementById('woh1-4').checked,
-woh1_7: document.getElementById('woh1-7').checked,
-hh_fnc: document.getElementById('hh-fnc').checked
-};
+    var pointFilters = {
+        marriott_35k: document.getElementById('marriott-35k').checked,
+        marriott_50k: document.getElementById('marriott-50k').checked,
+        marriott_85k: document.getElementById('marriott-85k').checked,
+        woh1_4: document.getElementById('woh1-4').checked,
+        woh1_7: document.getElementById('woh1-7').checked,
+        hh_fnc: document.getElementById('hh-fnc').checked
+    };
 
-var filteredHotels = hotelData.filter(function(hotel) {
-return applyBrandSpecialAndPointFilters(hotel, brandFilters, specialFilters, pointFilters);
-});
+    var filteredHotels = hotelData.filter(function(hotel) {
+        return applyBrandSpecialAndPointFilters(hotel, brandFilters, specialFilters, pointFilters);
+    });
 
-createHotelCards(filteredHotels);
-}
+    createHotelCards(filteredHotels);
+    }
 
-function applyBrandSpecialAndPointFilters(hotel, brandFilters, specialFilters, pointFilters) {
-if (pointFilters.marriott_35k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 35000) {
-return true;
-}
-if (pointFilters.marriott_50k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 50000) {
-return true;
-}
-if (pointFilters.marriott_85k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 85000) {
-return true;
-}
-if (pointFilters.woh1_4 && hotel.parent_co === 'hyatt' && hotel.prices.points.avg_cost_per_night <= 15000) {
-return true;
-}
-if (pointFilters.woh1_7 && hotel.parent_co === 'hyatt' && hotel.prices.points.avg_cost_per_night <= 30000) {
-return true;
-}
-if (pointFilters.hh_fnc && hotel.parent_co === 'hilton') {
-return true;
-}
-if (applySpecialFilters(hotel, specialFilters)) {
-return true;
-}
-if (isAnyBrandFilterChecked(brandFilters)) {
-return brandFilters[hotel.parent_co];
-}
-return isNoFilterChecked(brandFilters, specialFilters, pointFilters);
-}
+    function applyBrandSpecialAndPointFilters(hotel, brandFilters, specialFilters, pointFilters) {
+        if (pointFilters.marriott_35k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 35000) {
+            return true;
+        }
+        if (pointFilters.marriott_50k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 50000) {
+            return true;
+        }
+        if (pointFilters.marriott_85k && hotel.parent_co === 'marriott' && hotel.prices.points.avg_cost_per_night <= 85000) {
+            return true;
+        }
+        if (pointFilters.woh1_4 && hotel.parent_co === 'hyatt' && hotel.prices.points.avg_cost_per_night <= 15000) {
+            return true;
+        }
+        if (pointFilters.woh1_7 && hotel.parent_co === 'hyatt' && hotel.prices.points.avg_cost_per_night <= 30000) {
+            return true;
+        }
+        if (pointFilters.hh_fnc && hotel.parent_co === 'hilton') {
+            return true;
+        }
+        if (applySpecialFilters(hotel, specialFilters)) {
+            return true;
+        }
+        if (isAnyBrandFilterChecked(brandFilters)) {
+            return brandFilters[hotel.parent_co];
+        }
+    return isNoFilterChecked(brandFilters, specialFilters, pointFilters);
+    }
 
 function applySpecialFilters(hotel, specialFilters) {
-if (specialFilters.amex_mr && (hotel.parent_co === 'marriott' || hotel.parent_co === 'hilton')) {
-return true;
-}
-if (specialFilters.chase_ur && (hotel.parent_co === 'hyatt' || hotel.parent_co === 'ihg')) {
-return true;
-}
-if (specialFilters.bilt && (hotel.parent_co === 'hyatt' || hotel.parent_co === 'marriott' || hotel.parent_co === 'ihg')) {
-return true;
-}
-return false;
-}
+    if (specialFilters.amex_mr && (hotel.parent_co === 'marriott' || hotel.parent_co === 'hilton')) {
+        return true;
+    }
+    if (specialFilters.chase_ur && (hotel.parent_co === 'hyatt' || hotel.parent_co === 'ihg')) {
+        return true;
+    }
+    if (specialFilters.bilt && (hotel.parent_co === 'hyatt' || hotel.parent_co === 'marriott' || hotel.parent_co === 'ihg')) {
+        return true;
+    }
+    return false;
+    }
 
 function isAnyBrandFilterChecked(brandFilters) {
-return Object.values(brandFilters).some(function(isChecked) {
-return isChecked;
-});
+    return Object.values(brandFilters).some(function(isChecked) {
+    return isChecked;
+    });
 }
 
 function isNoFilterChecked(brandFilters, specialFilters, pointFilters) {
-return !isAnyBrandFilterChecked(brandFilters) && !Object.values(specialFilters).some(function(isChecked) {
-return isChecked;
-}) && !Object.values(pointFilters).some(function(isChecked) {
-return isChecked;
-});
+    return !isAnyBrandFilterChecked(brandFilters) && !Object.values(specialFilters).some(function(isChecked) {
+    return isChecked;
+    }) && !Object.values(pointFilters).some(function(isChecked) {
+    return isChecked;
+    });
 }
 
 function createHotelCards(hotelData) {
