@@ -1,9 +1,7 @@
-var signInSection = document.querySelector('.please-sign-in');
-var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
-console.log("UserStatus:", isUserSignedIn)
-
-// recommit
 document.addEventListener('DOMContentLoaded', function() {
+    var signInSection = document.querySelector('.please-sign-in');
+    var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
+    console.log("UserStatus:", isUserSignedIn)
     signInSection.style.setProperty('display', 'none', 'important');
     var currentURL = encodeURIComponent(window.location.href);
     var signUpButton = document.getElementById('hotel-ltd-sign-up');
@@ -63,17 +61,21 @@ document.addEventListener('DOMContentLoaded', function() {
 // }
 
 function constructApiUrl(destination, checkIn, checkOut, noGuests) {
-return `https://api.awardtravel.co/search_hotels?destination=${encodeURIComponent(destination)}&check_in_date=${encodeURIComponent(checkIn)}&check_out_date=${encodeURIComponent(checkOut)}&no_guests=${encodeURIComponent(noGuests)}`;}
+    return `https://api.awardtravel.co/search_hotels?destination=${encodeURIComponent(destination)}&check_in_date=${encodeURIComponent(checkIn)}&check_out_date=${encodeURIComponent(checkOut)}&no_guests=${encodeURIComponent(noGuests)}`;
+}
 
 function fetchHotelDataWithRetry(apiUrl, retries) {
-fetchHotelData(apiUrl).catch(error => {
-if (retries > 0) {
-setTimeout(() => {
-fetchHotelDataWithRetry(apiUrl, retries - 1);
-}, 10000);
-} else {
-console.error('Error fetching data after retries:', error);
-hidePreLoader();}});}
+    fetchHotelData(apiUrl).catch(error => {
+    if (retries > 0) {
+        setTimeout(() => {
+        fetchHotelDataWithRetry(apiUrl, retries - 1);
+        }, 10000);
+    } else {
+        console.error('Error fetching data after retries:', error);
+        hidePreLoader();
+        }
+    });
+}
 
 function fetchHotelData(apiUrl) {
 return new Promise((resolve, reject) => {
