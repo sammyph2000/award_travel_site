@@ -295,8 +295,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var today = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
         today.setHours(0, 0, 0, 0); 
 
-        var checkInDate = new Date(formatDate(checkInInput));
-        var checkOutDate = new Date(formatDate(checkOutInput));
+        var checkInDate = new Date(checkInInput);
+        var checkOutDate = new Date(checkOutInput);
 
         if (checkInDate <= today) {
             alert("Check-In date must be after today's date.");
