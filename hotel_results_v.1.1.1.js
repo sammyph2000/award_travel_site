@@ -309,8 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         var url = 'https://www.awardtravel.co/travel/hotel-results?destination=' + encodeURIComponent(destination) +
-            '&check_in=' + formatDate(checkInInput) +
-            '&check_out=' + formatDate(checkOutInput) +
+            '&check_in=' + checkInInput +
+            '&check_out=' + checkOutInput +
             '&no_guests=' + encodeURIComponent(noGuests);
 
         window.location.href = url;
