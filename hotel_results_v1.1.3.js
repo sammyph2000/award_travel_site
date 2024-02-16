@@ -286,6 +286,57 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('parent-co').textContent = hotel.parent_co || 'N/A';
                 document.getElementById('property-id').textContent = hotel.hotel_id || 'N/A';
             });
+
+    // Add this right after the bell icon click event setup
+    document.getElementById('set-alert-button').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent the form from submitting
+
+        var token = localStorage.getItem('awardTravelToken');
+        if (!token) {
+            alert('You must be signed in to set an alert.');
+            return;
+        }
+
+        // Retrieve values from the modal
+        var alertPrice = document.getElementById('alerts-points-price').value || document.getElementById('alerts-cash-price').value;
+        var checkInDate = document.getElementById('alerts-check-in-date').textContent;
+        var checkOutDate = document.getElementById('alerts-check-out-date').textContent;
+        var noGuests = document.getElementById('alerts-no-guests').textContent;
+        var parentCo = document.getElementById('parent-co').textContent;
+        var propertyId = document.getElementById('property-id').textContent;
+
+        var requestBody = {
+            alert_type: "hotel",
+            alert_price: alertPrice,
+            date: checkInDate,
+            check_out_date: checkOutDate,
+            no_guests: noGuests,
+            property_id: propertyId,
+            parent_company: parentCo
+        };
+
+        fetch('https://api.awardtravel.co/create_alert', {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Success! Alert Created Successfully');
+                document.getElementById('alerts-parent-div').style.display = 'none';
+            } else {
+                alert('Failed to create alert. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error creating alert. Please try again.');
+        });
+    });
+
     
     
             container.appendChild(cardClone);
