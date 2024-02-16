@@ -298,7 +298,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Retrieve values from the modal
-        var alertPrice = document.getElementById('alerts-points-price').value || document.getElementById('alerts-cash-price').value;
+        var pointsPrice = document.getElementById('alerts-points-price').value;
+        var cashPrice = document.getElementById('alerts-cash-price').value;
+        var alertPrice = pointsPrice || cashPrice;
+        var isAward = !!pointsPrice; // isAward is true if pointsPrice has a value, false otherwise
+
         var checkInDate = document.getElementById('alerts-check-in-date').textContent;
         var checkOutDate = document.getElementById('alerts-check-out-date').textContent;
         var noGuests = document.getElementById('alerts-no-guests').textContent;
@@ -312,7 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
             check_out_date: checkOutDate,
             no_guests: noGuests,
             property_id: propertyId,
-            parent_company: parentCo
+            parent_company: parentCo,
+            is_award: isAward
         };
 
         fetch('https://api.awardtravel.co/create_alert', {
