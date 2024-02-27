@@ -353,7 +353,8 @@ document.addEventListener('DOMContentLoaded', function() {
             no_guests: noGuests,
             property_id: propertyId,
             parent_company: parentCo,
-            is_award: isAward
+            is_award: isAward,
+            destination: destination
         };
 
         fetch('https://api.awardtravel.co/create_alert', {
