@@ -1,4 +1,3 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQVaCxOMnqr3vggag4UtiCKqioeJAuYL0&callback=initMap" async defer></script>
 var signInSection = document.querySelector('.please-sign-in');
 var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
 console.log("UserStatus:", isUserSignedIn);
