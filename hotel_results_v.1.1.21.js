@@ -546,6 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     document.getElementById('submit-button').addEventListener('click', function() {
+        console.log("Submit Button Clicked")
         var destination = document.getElementById('destination').value;
         var checkInInput = document.querySelector('.check-in').value;
         var checkOutInput = document.querySelector('.check-out').value;
@@ -571,6 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
             '&check_in=' + checkInInput +
             '&check_out=' + checkOutInput +
             '&no_guests=' + encodeURIComponent(noGuests);
+        console.log("Redirecting to : ", url)
 
         window.location.href = url;
     });
