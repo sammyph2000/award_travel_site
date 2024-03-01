@@ -19,7 +19,6 @@ function initMap() {
     mapInitialized = true;
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     signInSection.style.setProperty('display', 'none', 'important');
     var currentURL = encodeURIComponent(window.location.href);
@@ -145,12 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
     });
     
-    
-    
-    
-    
-    
-
     function getQueryParam(param) {
         var urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
