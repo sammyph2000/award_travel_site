@@ -3,12 +3,14 @@ var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
 console.log("UserStatus:", isUserSignedIn);
 var isAlertButtonListenerAdded = false;
 var map;
+var mapInitialized = false;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: {lat: -34.397, lng: 150.644}
     });
+    mapInitialized = true;
 }
 
 
@@ -45,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function centerMapOnDestination(destination) {
+        if (!mapInitialized) {
+            console.log("Map not initialized. Retrying...");
+            setTimeout(() => centerMapOnDestination(destination), 500); // Retry after a delay
+            return;
+        }
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': destination }, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {

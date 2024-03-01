@@ -1,7 +1,17 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQVaCxOMnqr3vggag4UtiCKqioeJAuYL0&callback=initMap" async defer></script>
 var signInSection = document.querySelector('.please-sign-in');
 var isUserSignedIn = localStorage.getItem('awardTravelToken') !== null;
 console.log("UserStatus:", isUserSignedIn);
 var isAlertButtonListenerAdded = false;
+var map;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: {lat: -34.397, lng: 150.644}
+    });
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     signInSection.style.setProperty('display', 'none', 'important');

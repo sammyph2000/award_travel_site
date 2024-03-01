@@ -35,6 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    function centerMapOnDestination(destination) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': destination }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+            } else {
+                console.error('Could not find location: ' + destination);
+            }
+        });
+    }
+
+    function plotHotelLocations(hotelData) {
+        hotelData.forEach(function(hotel) {
+            if (hotel.latitude && hotel.longitude) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(hotel.latitude, hotel.longitude),
+                    map: map,
+                    title: hotel.hotel_name
+                });
+            }
+        });
+    }
+    
+
     function getQueryParam(param) {
         var urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
@@ -56,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (document.getElementById('no_guests')) {
             document.getElementById('no_guests').value = noGuests;
         }
+
+        centerMapOnDestination(destination)
     }
 
     function constructApiUrl(destination, checkIn, checkOut, noGuests) {
@@ -94,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     hotelData = data;
                     console.log('API Response:', data);
                     createHotelCards(hotelData);
+                    plotHotelLocations(hotelData);
                     hidePreLoader();
                     resolve(data);
                 })
